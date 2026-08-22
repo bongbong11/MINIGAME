@@ -15,9 +15,9 @@ function createOverlay() {
     titlebar.className = 'st-mini-games-titlebar';
     titlebar.textContent = '심심풀이';
     const frame = document.createElement('iframe');
-    frame.title = '솔리테어, 아이템 벽돌깨기, 스도쿠';
+    frame.title = '심심풀이 미니게임';
     const gameUrl = new URL('./game.html', import.meta.url);
-    gameUrl.searchParams.set('v', '8.0.0');
+    gameUrl.searchParams.set('v', '9.0.0');
     frame.src = gameUrl.href;
     const close = document.createElement('button');
     close.className = 'st-mini-games-close';
@@ -81,12 +81,53 @@ function openMiniGames() {
     return '';
 }
 
+function addWandMenuButton() {
+    if (document.querySelector('#st-mini-games-wand')) return true;
+    const menu = document.querySelector('#extensionsMenu');
+    if (!menu) return false;
+
+    const button = document.createElement('div');
+    button.id = 'st-mini-games-wand';
+    button.className = 'list-group-item flex-container flexGap5';
+    button.setAttribute('role', 'button');
+    button.setAttribute('tabindex', '0');
+    button.setAttribute('title', '심심풀이 열기');
+
+    const icon = document.createElement('div');
+    icon.className = 'fa-solid fa-gamepad extensionsMenuExtensionButton';
+    icon.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span');
+    label.textContent = '심심풀이';
+    button.append(icon, label);
+
+    const open = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        openMiniGames();
+        document.querySelector('#extensionsMenuButton')?.click();
+    };
+    button.addEventListener('click', open);
+    button.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') open(event);
+    });
+    menu.append(button);
+    return true;
+}
+
+if (!addWandMenuButton()) {
+    let attempts = 0;
+    const wandTimer = window.setInterval(() => {
+        attempts++;
+        if (addWandMenuButton() || attempts >= 40) window.clearInterval(wandTimer);
+    }, 250);
+}
+
 SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     name: 'minigame',
     callback: openMiniGames,
     aliases: [],
     returns: 'void',
-    helpString: '채팅을 생성하거나 전송하지 않고 솔리테어, 아이템 벽돌깨기, 스도쿠 플로팅 창을 엽니다.',
+    helpString: '채팅을 변경하지 않고 심심풀이 미니게임 플로팅 창을 엽니다.',
     namedArgumentList: [],
     unnamedArgumentList: [],
 }));
