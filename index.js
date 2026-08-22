@@ -16,8 +16,9 @@ function createOverlay() {
     titlebar.textContent = '심심풀이';
     const frame = document.createElement('iframe');
     frame.title = '심심풀이 미니게임';
+    frame.allow = 'autoplay';
     const gameUrl = new URL('./game.html', import.meta.url);
-    gameUrl.searchParams.set('v', '9.0.0');
+    gameUrl.searchParams.set('v', '9.0.3');
     frame.src = gameUrl.href;
     const close = document.createElement('button');
     close.className = 'st-mini-games-close';

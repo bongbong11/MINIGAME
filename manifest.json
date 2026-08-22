@@ -4,7 +4,7 @@
   "js": "index.js",
   "css": "style.css",
   "author": "SillyTavern User",
-  "version": "9.0.0",
+  "version": "9.0.3",
   "auto_update": true,
   "minimum_client_version": "1.12.0"
 }
