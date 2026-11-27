@@ -56,7 +56,7 @@ function inspect() {
         winVisible = !!WIN_SELECTORS[game] && !!panel.querySelector(WIN_SELECTORS[game]);
         lastScore = game === 'snake' ? readScore(panel, '.snake-toolbar', /점수\s*(\d+)/)
             : game === 'brick' ? readScore(panel, '.brick-toolbar', /(\d+)\s*점/) : 0;
-        paidMilestones = Math.min(20, Math.floor(lastScore / (game === 'snake' ? 5 : 500)));
+        paidMilestones = Math.min(20, Math.floor(lastScore / (game === 'snake' ? 5 : 100)));
         return; // A previously completed/saved game is not a new achievement.
     }
 
@@ -66,7 +66,7 @@ function inspect() {
             : readScore(panel, '.brick-toolbar', /(\d+)\s*점/);
         if (score < lastScore) paidMilestones = 0; // New round.
         lastScore = score;
-        const step = game === 'snake' ? 5 : 500;
+        const step = game === 'snake' ? 5 : 100;
         const reached = Math.min(20, Math.floor(score / step));
         while (paidMilestones < reached) {
             paidMilestones++;
