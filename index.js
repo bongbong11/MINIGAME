@@ -18,7 +18,7 @@ function createOverlay() {
     frame.title = '심심풀이 미니게임';
     frame.allow = 'autoplay';
     const gameUrl = new URL('./game.html', import.meta.url);
-    gameUrl.searchParams.set('v', '9.0.3');
+    gameUrl.searchParams.set('v', '9.0.4');
     frame.src = gameUrl.href;
     const close = document.createElement('button');
     close.className = 'st-mini-games-close';
@@ -81,6 +81,9 @@ function openMiniGames() {
     window.setTimeout(() => createOverlay().classList.add('active'), 50);
     return '';
 }
+
+// Other extensions may open the game without depending on the wand menu DOM.
+window.stMiniGamesOpen = openMiniGames;
 
 function addWandMenuButton() {
     if (document.querySelector('#st-mini-games-wand')) return true;
